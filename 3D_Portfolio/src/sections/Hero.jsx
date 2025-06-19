@@ -3,59 +3,32 @@ import HackerRoom from "../components/HackerRoom";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
-import { Leva } from "leva";
 import { useControls } from "leva";
+import { calculateSizes } from "../constants/index.js";
 import { useMediaQuery } from "react-responsive";
+import Target from "../components/Target";
+import ReactLogo from "../components/ReactLogo";
+import Cube from "../components/Cube.jsx";
+import Ring from "../components/Ring.jsx";
+import HeroCamera from "../components/HeroCamera.jsx";
+import Button from "../components/Button.jsx";
 
 const Hero = () => {
 	// const x = useControls("HackerRoom", {
-	// 	positionX: {
-	// 		value: 2.5,
-	// 		min: -10,
-	// 		max: 10,
-	// 	},
-	// 	positionY: {
-	// 		value: 2.5,
-	// 		min: -15,
-	// 		max: 10,
-	// 	},
-	// 	positionZ: {
-	// 		value: 2.5,
-	// 		min: -10,
-	// 		max: 10,
-	// 	},
-	// 	rotationX: {
-	// 		value: 2.5,
-	// 		min: -10,
-	// 		max: 1,
-	// 	},
-	// 	rotationY: {
-	// 		value: 2.5,
-	// 		min: -3,
-	// 		max: 3,
-	// 	},
-	// 	rotationZ: {
-	// 		value: 2.5,
-	// 		min: -1,
-	// 		max: 1,
-	// 	},
-	// 	scale: {
-	// 		value: 1,
-	// 		min: 0.1,
-	// 		max: 0.5,
-	// 	},
-	// });
-	const isSmall = useMediaQuery({ maxWidth: 300 });
+	const isSmall = useMediaQuery({ maxWidth: 440 });
 	const isMobile = useMediaQuery({ maxWidth: 639 });
-	const isTablet = useMediaQuery({ minWidth: 640, maxWidth: 1023 });
+	const isTablet = useMediaQuery({ minWidth: 639, maxWidth: 1024 });
+
+	const sizes = calculateSizes(isSmall, isMobile, isTablet);
 
 	return (
 		<section className="min-h-screen flex flex-col relative ">
 			<div
-				className="w-full mx-auto flex flex-col sm:mt-36 mt-20
+				className="w-full mx-auto flex flex-col 
 				c-space gap-3"
+				style={{ marginTop: "7rem" }}
 			>
-				<p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
+				<p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans ">
 					Hi, I am Aaron
 					<span className="waving-hand"> 👋</span>
 				</p>
@@ -69,28 +42,29 @@ const Hero = () => {
 					<Suspense fallback={<CanvasLoader />}>
 						<PerspectiveCamera
 							makeDefault
-							position={[0, 0, 30]}
-						></PerspectiveCamera>
-						<HackerRoom
-							/*scale={[x.scale, x.scale, x.scale]}
-							position={[
-								x.positionX,
-								x.positionY,
-								x.positionZ,
-							]}
-							rotation={[
-								x.rotationX,
-								x.rotationY,
-								x.rotationZ,
-							]}*/
-							scale={isMobile ? 0.12 : 0.13}
-							position={
-								isMobile
-									? [0.3, -9.0, -3.3]
-									: [0.3, -15.0, -3.3]
-							}
-							rotation={[0, -Math.PI, 0]}
+							position={[0, 0, 0]}
 						/>
+						<HeroCamera isMobile={isMobile}>
+							<HackerRoom
+								scale={sizes.deskScale}
+								position={sizes.deskPosition}
+								rotation={[0.1, -Math.PI, 0]}
+							/>
+						</HeroCamera>
+
+						<group>
+							<Target
+								position={sizes.targetPosition}
+							/>
+							<ReactLogo
+								position={
+									sizes.reactLogoPosition
+								}
+							/>
+							<Cube position={sizes.cubePosition} />
+							<Ring position={sizes.ringPosition} />
+						</group>
+
 						<ambientLight intensity={1} />
 						<directionalLight
 							position={[10, 10, 10]}
@@ -98,6 +72,16 @@ const Hero = () => {
 						/>
 					</Suspense>
 				</Canvas>
+			</div>
+
+			<div className="absolute bottom-7 left-0 right-0 w-full z-10 c-space">
+				<a href="#contact" className="w-fit">
+					<Button
+						name="Let's work together"
+						isBeam
+						containerClass="sm:w-fit w-full sm:min-w-96"
+					/>
+				</a>
 			</div>
 		</section>
 	);

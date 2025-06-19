@@ -1,10 +1,16 @@
 import { useGLTF, useTexture } from "@react-three/drei";
 
 const HackerRoom = (props) => {
-	const { nodes, materials } = useGLTF("/models/hacker-room.glb");
+	const { nodes, materials } = useGLTF(
+		import.meta.env.BASE_URL + "models/hacker-room.glb"
+	);
 
-	const monitortxt = useTexture("textures/desk/monitor.png");
-	const screenTxt = useTexture("textures/desk/screen.png");
+	const monitortxt = useTexture(
+		import.meta.env.BASE_URL + "textures/desk/monitor.png"
+	);
+	const screenTxt = useTexture(
+		import.meta.env.BASE_URL + "textures/desk/screen.png"
+	);
 
 	return (
 		<group {...props} dispose={null}>
@@ -74,6 +80,6 @@ const HackerRoom = (props) => {
 	);
 };
 
-useGLTF.preload("/models/hacker-room.glb");
+useGLTF.preload(import.meta.env.BASE_URL + "models/hacker-room.glb");
 
 export default HackerRoom;

@@ -40,9 +40,10 @@ const Navbar = () => {
 					>
 						<img
 							src={
-								isOpen
+								import.meta.env.BASE_URL +
+								(isOpen
 									? "assets/close.svg"
-									: "assets/menu.svg"
+									: "assets/menu.svg")
 							}
 							alt="toggle"
 							className="w-6 h-6"
