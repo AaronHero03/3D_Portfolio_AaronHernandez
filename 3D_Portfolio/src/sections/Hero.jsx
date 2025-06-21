@@ -22,7 +22,7 @@ const Hero = () => {
 	const sizes = calculateSizes(isSmall, isMobile, isTablet);
 
 	return (
-		<section className="min-h-screen flex flex-col relative ">
+		<section className="min-h-screen flex flex-col relative " id="home">
 			<div
 				className="w-full mx-auto flex flex-col 
 				c-space gap-3"
@@ -65,7 +65,7 @@ const Hero = () => {
 							<Ring position={sizes.ringPosition} />
 						</group>
 
-						<ambientLight intensity={1} />
+						<ambientLight intensity={0.75} />
 						<directionalLight
 							position={[10, 10, 10]}
 							intensity={0.5}
@@ -75,7 +75,7 @@ const Hero = () => {
 			</div>
 
 			<div className="absolute bottom-7 left-0 right-0 w-full z-10 c-space">
-				<a href="#contact" className="w-fit">
+				<a href="#about" className="w-fit">
 					<Button
 						name="Let's work together"
 						isBeam
